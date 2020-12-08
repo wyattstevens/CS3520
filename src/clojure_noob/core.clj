@@ -1,3 +1,4 @@
+
 (ns clojure-noob.core
   (:gen-class))
 
@@ -7,12 +8,14 @@
     (fn [[x n]] (repeat n x))
     (apply merge-with - (map frequencies [s1 s2]))))
 
+(defn cl-print [x] (doto x (print)))
 
 (defn -main
   [& args]
   ;(require '[clojure.string :as str])
   (def alphabet ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"])
   
+  (println "The first player that uses all of their letters wins!")
   (println "Enter the name for player 1!")
   (def player1 (read-line))
   (println "Enter the name for player2!")
