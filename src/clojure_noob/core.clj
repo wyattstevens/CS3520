@@ -22,26 +22,40 @@
           ;(def pName (read-line))
           (recur (inc i) (assoc acc i (take 10 (repeatedly #(nth alphabet (rand-int 26)))))))
         (do 
-          (println acc) 
+ ;         (println acc) 
           acc)))))
  
 ;this loop is intended to switch between players and allow each player to take their turn until someone wins.
 (defn take-turns [acc]
-  (let [stop false]
-    (loop [i 0 new_acc {}] 
-      ;(if (> i (count acc)) 
-      (if (not stop) 
+  (let [stop false] 
+    (loop [i 0 new_acc acc] 
+
+      (def letter_count (new_acc i))
+      (if (and (not stop) ( not(= 0 (count letter_count))) )
         (do
-          ;(println (count acc))
+          (println "")
           (println "Player #" (+ 1 i) ", it is your turn!")
-          (println "Your letters are:" (get acc i))
+          (println "Your letters are:" (get new_acc i))
           (println "Enter a word to play:")
+
+          (def user_input (read-line))
+          (def user_dec_input (clojure.string/split user_input #""))
+          (def old_letters (into [] (new_acc i)))
+          (def new_letters (diff old_letters user_dec_input))
+          
+
           ;(doseq [[k v] acc]
             ;(println k ", it is your turn!")
             ;
-          (recur (inc i) new_acc))
+
+          ; Resets i to 0 after the last player takes their turn
+          (def x (count new_acc))
+          (if (= i (- x 1))  
+          (recur (* i 0) (assoc new_acc i new_letters))
+          (recur (inc i) (assoc new_acc i new_letters)))
+          
+          )
         (do 
-          ;(println acc) 
           i)))))
           
 
